@@ -1,0 +1,12 @@
+#Importar Modulo do AD no Power Shell
+Import-Module ActiveDirectory
+
+#Declarar a variavel com caminho do arquivo .CSV
+$PathPC = <C:\...>
+#Declarar a variavel com caminho da OU no AD
+$PathOU = 
+
+#Variavél para Importar arquivo CSV
+$USERS = Import-CSV $PathPC
+#Campos dos atributos do objeto de usuários a ser imputado
+$USERS | ForEach-Object { New-ADUser -Path '$PathOU' -sAMAccountName $_.samaccountname -Name $_.cn -UserPrincipalName $_.samaccountname -OfficePhone $_.TelephoneNumber -StreetAddress $_.StreetAddress -City $_.City -Title $_.Title -displayname $_.cn -givenName $_.givenName -Surname $_.sn -emailaddress $_.mail -department $_.department -company $_.company -postalCode $_.postalCode -state $_.st -country $_.co -HomePage $_.site -Office $_.Organization -EmployeeNumber $_.employeeNumber }
